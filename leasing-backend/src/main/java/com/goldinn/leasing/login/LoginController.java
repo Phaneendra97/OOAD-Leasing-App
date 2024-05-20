@@ -21,4 +21,14 @@ public class LoginController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PostMapping("/signin")
+    public ResponseEntity<String> authenticateUser(@RequestBody LoginRequest loginRequest) {
+        boolean isAuthenticated = loginService.authenticateUser(loginRequest);
+        if (isAuthenticated) {
+            return ResponseEntity.ok("User signed in successfully");
+        } else {
+            return new ResponseEntity<>("Invalid email or password", HttpStatus.UNAUTHORIZED);
+        }
+    }
 }

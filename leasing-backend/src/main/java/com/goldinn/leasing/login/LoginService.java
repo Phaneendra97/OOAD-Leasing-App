@@ -21,4 +21,12 @@ public class LoginService {
         user.setAdmin(false);
         return userRepository.save(user);
     }
+
+    public boolean authenticateUser(LoginRequest loginRequest) {
+        User user = userRepository.findByEmail(loginRequest.getEmail());
+        if (user != null && passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+            return true;
+        }
+        return false;
+    }
 }
