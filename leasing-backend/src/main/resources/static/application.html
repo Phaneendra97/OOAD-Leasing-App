@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application - GoldInn House Leasing</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="index.html">
+            <img src="https://via.placeholder.com/40" alt="GoldInn Logo">
+            GoldInn House Leasing
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="housing-options.html">Housing Options</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="application.html">Application</a>
+                </li>
+                <li class="nav-item" id="logout-nav-item" style="display: none;">
+                    <span id="user-name" class="navbar-text"></span>
+                    <button class="btn btn-link nav-link" id="logout-button">Logout</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h1 class="text-center">Application</h1>
+        <div id="application-container" class="text-center">
+            <h2>Selected Unit ID: <span id="unit-id"></span></h2>
+            <div class="mt-4">
+                <a href="leasingApp.pdf" download class="btn btn-primary">Download Application Form</a>
+            </div>
+            <div class="mt-4">
+                <label for="pdf-upload" class="btn btn-primary">Upload filled PDF</label>
+                <input type="file" id="pdf-upload" accept="application/pdf" style="display: none;">
+                <p id="file-name" class="mt-2"></p>
+            </div>
+            <button id="submit-application" class="btn btn-success mt-4">Submit Application</button>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const unitId = localStorage.getItem('selectedUnitId');
+            document.getElementById('unit-id').textContent = unitId;
+
+            document.getElementById('pdf-upload').addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    document.getElementById('file-name').textContent = file.name;
+                } else {
+                    document.getElementById('file-name').textContent = '';
+                }
+            });
+
+            document.getElementById('submit-application').addEventListener('click', function() {
+                const fileInput = document.getElementById('pdf-upload');
+                const file = fileInput.files[0];
+
+                if (!file) {
+                    alert('Please upload a PDF file.');
+                    return;
+                }
+
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('unitId', unitId);
+
+                fetch('/api/applications', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Application submitted successfully.');
+                        window.location.href = 'index.html';
+                    } else {
+                        alert('Failed to submit application.');
+                    }
+                })
+                .catch(error => {
+                    alert('An error occurred while submitting the application.');
+                });
+            });
+
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const firstName = localStorage.getItem('firstName');
+
+            if (isLoggedIn === 'true') {
+                document.getElementById('user-name').textContent = `Hello, ${firstName}`;
+                document.getElementById('logout-nav-item').style.display = 'block';
+            } else {
+                window.location.href = 'resident-login.html'; // Redirect to login if not logged in
+            }
+
+            document.getElementById('logout-button').addEventListener('click', function () {
+                fetch('/api/auth/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(response => {
+                    if (response.status === 200) {
+                        localStorage.removeItem('isLoggedIn'); // Clear login flag
+                        localStorage.removeItem('firstName'); // Clear first name
+                        window.location.href = 'index.html';
+                    } else {
+                        alert('Logout failed');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

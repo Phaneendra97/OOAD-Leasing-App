@@ -14,7 +14,20 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeRequests(authorize -> authorize
-                .requestMatchers("/", "/index.html", "/create-account.html", "/resident-login.html", "/css/**", "/js/**", "/images/**", "/api/auth/**").permitAll()  // Allow access to these paths without authentication
+                .requestMatchers(
+                    "/", 
+                    "/index.html", 
+                    "/create-account.html", 
+                    "/resident-login.html", 
+                    "/leasingApp.pdf",
+                    "/housing-options.html", 
+                    "/application.html",  // Ensure this path is included
+                    "/api/auth/**",
+                    "/api/housing-units/**", // Ensure this path is included
+                    "/css/**", 
+                    "/js/**", 
+                    "/images/**"
+                ).permitAll()  // Allow access to these paths without authentication
                 .anyRequest().authenticated()  // All other paths require authentication
             )
             .formLogin(formLogin -> formLogin
