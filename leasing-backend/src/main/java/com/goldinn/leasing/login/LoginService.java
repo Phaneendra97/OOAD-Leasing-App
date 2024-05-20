@@ -1,11 +1,15 @@
 package com.goldinn.leasing.login;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LoginService {
+
+    private static final Logger logger = LoggerFactory.getLogger(LoginService.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -22,11 +26,14 @@ public class LoginService {
         return userRepository.save(user);
     }
 
-    public boolean authenticateUser(LoginRequest loginRequest) {
+    public User authenticateUser(LoginRequest loginRequest) {
+        logger.info("Authenticating user: {}", loginRequest.getEmail());
         User user = userRepository.findByEmail(loginRequest.getEmail());
         if (user != null && passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-            return true;
+            logger.info("User authenticated: {}", user.getEmail());
+            return user;
         }
-        return false;
+        logger.warn("Authentication failed for user: {}", loginRequest.getEmail());
+        return null;
     }
 }
