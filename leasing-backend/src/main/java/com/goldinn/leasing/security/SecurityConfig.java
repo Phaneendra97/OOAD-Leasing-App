@@ -20,6 +20,7 @@ public class SecurityConfig {
                     "/create-account.html", 
                     "/resident-login.html", 
                     "/leasingApp.pdf",
+                    "/api/applications/**",
                     "/housing-options.html", 
                     "/application.html",  // Ensure this path is included
                     "/api/auth/**",

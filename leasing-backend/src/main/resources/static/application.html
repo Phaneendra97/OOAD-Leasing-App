@@ -41,7 +41,7 @@
                 <a href="leasingApp.pdf" download class="btn btn-primary">Download Application Form</a>
             </div>
             <div class="mt-4">
-                <label for="pdf-upload" class="btn btn-primary">Upload filled PDF</label>
+                <label for="pdf-upload" class="btn btn-primary">Upload PDF</label>
                 <input type="file" id="pdf-upload" accept="application/pdf" style="display: none;">
                 <p id="file-name" class="mt-2"></p>
             </div>
@@ -69,6 +69,7 @@
             document.getElementById('submit-application').addEventListener('click', function() {
                 const fileInput = document.getElementById('pdf-upload');
                 const file = fileInput.files[0];
+                const userId = localStorage.getItem('userId'); // Assuming userId is stored in localStorage
 
                 if (!file) {
                     alert('Please upload a PDF file.');
@@ -78,6 +79,7 @@
                 const formData = new FormData();
                 formData.append('file', file);
                 formData.append('unitId', unitId);
+                formData.append('userId', userId);
 
                 fetch('/api/applications', {
                     method: 'POST',
