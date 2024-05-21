@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 public class LoginService {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginService.class);
+    private static final String ADMIN_ACCESS_CODE = "openseseme";
 
     @Autowired
     private UserRepository userRepository;
@@ -23,6 +24,23 @@ public class LoginService {
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setAdmin(false);
+        return userRepository.save(user);
+    }
+
+    public User createAdminUser(AdminSignUpRequest adminSignUpRequest) {
+        if (!ADMIN_ACCESS_CODE.equals(adminSignUpRequest.getAccessCode())) {
+            throw new IllegalArgumentException("Invalid access code");
+        }
+        if (userRepository.findByEmail(adminSignUpRequest.getEmail()) != null) {
+            throw new IllegalArgumentException("Email already exists");
+        }
+        User user = new User();
+        user.setFirstName(adminSignUpRequest.getFirstName());
+        user.setLastName(adminSignUpRequest.getLastName());
+        user.setPhone(adminSignUpRequest.getPhone());
+        user.setEmail(adminSignUpRequest.getEmail());
+        user.setPassword(passwordEncoder.encode(adminSignUpRequest.getPassword()));
+        user.setAdmin(true);
         return userRepository.save(user);
     }
 

@@ -19,17 +19,19 @@ public class SecurityConfig {
                     "/index.html", 
                     "/create-account.html", 
                     "/resident-login.html", 
+                    "/admin-login.html", 
+                    "/admin-create-account.html", 
                     "/leasingApp.pdf",
                     "/api/applications/**",
                     "/housing-options.html", 
-                    "/application.html",  // Ensure this path is included
+                    "/application.html",  
                     "/api/auth/**",
-                    "/api/housing-units/**", // Ensure this path is included
+                    "/api/housing-units/**",
                     "/css/**", 
                     "/js/**", 
                     "/images/**"
-                ).permitAll()  // Allow access to these paths without authentication
-                .anyRequest().authenticated()  // All other paths require authentication
+                ).permitAll()
+                .anyRequest().authenticated()
             )
             .formLogin(formLogin -> formLogin
                 .loginPage("/resident-login.html")  // Specify your login page

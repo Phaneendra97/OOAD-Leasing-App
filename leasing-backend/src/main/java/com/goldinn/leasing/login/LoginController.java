@@ -31,6 +31,18 @@ public class LoginController {
         }
     }
 
+    @PostMapping("/register-admin")
+    public ResponseEntity<String> createAdminUser(@RequestBody AdminSignUpRequest adminSignUpRequest) {
+        try {
+            logger.info("Creating admin user: {}", adminSignUpRequest.getEmail());
+            loginService.createAdminUser(adminSignUpRequest);
+            return new ResponseEntity<>("Admin account created successfully", HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            logger.error("Error creating admin user: {}", e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
         logger.info("Authenticating user: {}", loginRequest.getEmail());
@@ -39,7 +51,8 @@ public class LoginController {
             logger.info("User authenticated: {}", authenticatedUser.getEmail());
             return ResponseEntity.ok(Map.of(
                 "firstName", authenticatedUser.getFirstName(),
-                "userId", authenticatedUser.getId()
+                "userId", authenticatedUser.getId(),
+                "isAdmin", authenticatedUser.isAdmin()
             ));
         } else {
             logger.warn("Authentication failed for user: {}", loginRequest.getEmail());
