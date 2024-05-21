@@ -1,16 +1,27 @@
 package com.goldinn.leasing.application;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.goldinn.leasing.login.User;
 
-@Document(collection = "applications")
-public class Application {
-    @Id
+public class ApplicationWithUserDetails {
     private String id;
     private String unitId;
     private String pdfFile;
     private String approvalStatus;
     private String userId;
+    private String firstName;
+    private String lastName;
+
+    public ApplicationWithUserDetails(Application application, User user) {
+        this.id = application.getId();
+        this.unitId = application.getUnitId();
+        this.pdfFile = application.getPdfFile();
+        this.approvalStatus = application.getApprovalStatus();
+        this.userId = application.getUserId();
+        if (user != null) {
+            this.firstName = user.getFirstName();
+            this.lastName = user.getLastName();
+        }
+    }
 
     // Getters and setters
     public String getId() {
@@ -51,5 +62,21 @@ public class Application {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

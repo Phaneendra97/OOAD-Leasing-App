@@ -1,7 +1,8 @@
-package com.goldinn.leasing.controller;
+package com.goldinn.leasing.application;
 
-import com.goldinn.leasing.model.Application;
-import com.goldinn.leasing.service.ApplicationService;
+import com.goldinn.leasing.application.Application;
+import com.goldinn.leasing.application.ApplicationWithUserDetails;
+import com.goldinn.leasing.application.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Base64;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/applications")
@@ -49,5 +51,16 @@ public class ApplicationController {
     public ResponseEntity<String> deleteApplicationByUserId(@PathVariable String userId) {
         applicationService.deleteApplicationByUserId(userId);
         return ResponseEntity.ok("Application withdrawn successfully.");
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<ApplicationWithUserDetails>> getAllApplications() {
+        return ResponseEntity.ok(applicationService.getAllApplications());
+    }
+
+    @PutMapping("/update-status/{id}")
+    public ResponseEntity<String> updateApplicationStatus(@PathVariable String id, @RequestBody Application application) {
+        applicationService.updateApplicationStatus(id, application.getApprovalStatus());
+        return ResponseEntity.ok("Status updated successfully");
     }
 }
