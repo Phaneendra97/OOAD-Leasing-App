@@ -15,4 +15,15 @@ public class ApplicationService {
         application.setApprovalStatus("pending");
         return applicationRepository.save(application);
     }
+
+    public Application getApplicationByUserId(String userId) {
+        return applicationRepository.findByUserId(userId);
+    }
+
+    public void deleteApplicationByUserId(String userId) {
+        Application application = applicationRepository.findByUserId(userId);
+        if (application != null) {
+            applicationRepository.delete(application);
+        }
+    }
 }
