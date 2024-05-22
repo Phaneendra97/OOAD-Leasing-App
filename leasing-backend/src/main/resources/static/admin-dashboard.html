@@ -86,22 +86,23 @@
             });
           });
       });
-      async function updateStatus(id, status) {
-        const response = await fetch(`/api/applications/update-status/${id}`, {
+
+      function approveApplication(id) {
+        fetch(`/api/applications/update-status/${id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ approvalStatus: status }),
+          body: JSON.stringify({ approvalStatus: "approved" }),
+        }).then((response) => {
+          if (response.ok) {
+            location.reload(); // Reload the page to see the updated table
+          } else {
+            alert("Failed to approve application.");
+          }
         });
-
-        if (response.ok) {
-          alert("Status updated successfully");
-          location.reload();
-        } else {
-          alert("Failed to update status");
-        }
       }
+
       function declineApplication(id) {
         fetch(`/api/applications/delete/${id}`, {
           method: "DELETE",

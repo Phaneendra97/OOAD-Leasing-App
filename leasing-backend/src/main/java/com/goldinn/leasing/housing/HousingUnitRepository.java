@@ -10,5 +10,6 @@ import java.util.Optional;
 @Repository
 public interface HousingUnitRepository extends MongoRepository<HousingUnit, String> {
     Optional<HousingUnit> findByUserId(String userId);
+    Optional<HousingUnit> findByUnitId(String unitId);
     List<HousingUnit> findByUserIdIsNull();
 }

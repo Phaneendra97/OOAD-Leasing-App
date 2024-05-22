@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import java.util.List;
+import java.io.IOException;
+import java.util.Base64;
 
 import java.io.IOException;
 import java.util.Base64;
@@ -30,9 +33,9 @@ public class ApplicationController {
         application.setUnitId(unitId);
         application.setPdfFile(pdfFileBase64);
         application.setUserId(userId);
-
+        
         applicationService.createApplication(application);
-
+        
         return ResponseEntity.ok("Application submitted successfully.");
     }
 
@@ -64,8 +67,8 @@ public class ApplicationController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteApplication(@PathVariable String id) {
-        applicationService.deleteApplication(id);
-        return ResponseEntity.ok("Application declined successfully");
+    public ResponseEntity<String> deleteApplicationById(@PathVariable String id) {
+        applicationService.deleteApplicationById(id);
+        return ResponseEntity.ok("Application deleted successfully.");
     }
 }

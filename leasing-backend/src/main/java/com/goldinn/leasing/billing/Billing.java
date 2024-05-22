@@ -13,6 +13,7 @@ public class Billing {
     private double gas;
     private double electricity;
     private double maintenance;
+    private double rent; // Add rent field
 
     // Getters and Setters
 
@@ -62,5 +63,13 @@ public class Billing {
 
     public void setMaintenance(double maintenance) {
         this.maintenance = maintenance;
+    }
+
+    public double getRent() {
+        return rent;
+    }
+
+    public void setRent(double rent) {
+        this.rent = rent;
     }
 }
