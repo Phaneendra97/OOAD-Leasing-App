@@ -22,9 +22,9 @@ public class SecurityConfig {
                     "/admin-login.html", 
                     "/admin-create-account.html", 
                     "/leasingApp.pdf",
+                    "/admin-dashboard.html",
                     "/api/applications/**",
-                    "/housing-options.html",
-                    "/admin-dashboard.html", 
+                    "/housing-options.html", 
                     "/application.html",  
                     "/api/auth/**",
                     "/api/housing-units/**",
@@ -35,14 +35,20 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
             )
             .formLogin(formLogin -> formLogin
-                .loginPage("/resident-login.html")  // Specify your login page
+                .loginPage("/resident-login.html")
+                .defaultSuccessUrl("/index.html", true)
+                .permitAll()
+            )
+            .formLogin(formLogin -> formLogin
+                .loginPage("/admin-login.html")
+                .defaultSuccessUrl("/admin-dashboard.html", true)
                 .permitAll()
             )
             .logout(logout -> logout
-                .logoutUrl("/api/auth/logout") // Custom logout URL
+                .logoutUrl("/api/auth/logout")
                 .permitAll()
             )
-            .csrf(csrf -> csrf.disable()); // Disable CSRF for simplicity (not recommended for production)
+            .csrf(csrf -> csrf.disable());
 
         return http.build();
     }
