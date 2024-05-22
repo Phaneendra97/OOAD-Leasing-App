@@ -63,4 +63,17 @@ public class ApplicationController {
         applicationService.updateApplicationStatus(id, application.getApprovalStatus());
         return ResponseEntity.ok("Status updated successfully");
     }
+
+    @GetMapping("/download/{id}")
+    public ResponseEntity<byte[]> downloadPdfFile(@PathVariable String id) {
+        Application application = applicationService.getApplicationById(id);
+        if (application != null) {
+            byte[] pdfFileBytes = Base64.getDecoder().decode(application.getPdfFile());
+            return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename=\"application.pdf\"")
+                    .body(pdfFileBytes);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

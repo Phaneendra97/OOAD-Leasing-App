@@ -23,6 +23,7 @@ public class LoginController {
     public ResponseEntity<String> createUser(@RequestBody User user) {
         try {
             logger.info("Creating user: {}", user.getEmail());
+            user.setIsResident(false);
             loginService.createUser(user);
             return new ResponseEntity<>("Account created successfully", HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
@@ -35,6 +36,7 @@ public class LoginController {
     public ResponseEntity<String> createAdminUser(@RequestBody AdminSignUpRequest adminSignUpRequest) {
         try {
             logger.info("Creating admin user: {}", adminSignUpRequest.getEmail());
+            adminSignUpRequest.setIsResident(null);
             loginService.createAdminUser(adminSignUpRequest);
             return new ResponseEntity<>("Admin account created successfully", HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {

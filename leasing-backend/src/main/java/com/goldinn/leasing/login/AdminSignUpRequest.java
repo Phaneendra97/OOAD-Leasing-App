@@ -7,6 +7,7 @@ public class AdminSignUpRequest {
     private String email;
     private String password;
     private String accessCode;
+    private Boolean isResident;
 
     // Getters and setters
     public String getFirstName() {
@@ -55,5 +56,13 @@ public class AdminSignUpRequest {
 
     public void setAccessCode(String accessCode) {
         this.accessCode = accessCode;
+    }
+
+    public Boolean getIsResident() {
+        return isResident;
+    }
+
+    public void setIsResident(Boolean isResident) {
+        this.isResident = isResident;
     }
 }

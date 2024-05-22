@@ -11,9 +11,11 @@ public class User {
     private String lastName;
     private String phone;
     private String email;
-    private String Password;
+    private String password;
     private boolean isAdmin;
+    private Boolean isResident; // Nullable Boolean field
 
+    // Getters and setters
     public String getId() {
         return id;
     }
@@ -24,6 +26,10 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getFirstName() {
@@ -51,15 +57,11 @@ public class User {
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String password) {
-        Password = password;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+        this.password = password;
     }
 
     public boolean isAdmin() {
@@ -70,4 +72,11 @@ public class User {
         this.isAdmin = isAdmin;
     }
 
+    public Boolean getIsResident() {
+        return isResident;
+    }
+
+    public void setIsResident(Boolean isResident) {
+        this.isResident = isResident;
+    }
 }

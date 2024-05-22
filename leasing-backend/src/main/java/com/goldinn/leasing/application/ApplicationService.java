@@ -48,4 +48,8 @@ public class ApplicationService {
         application.setApprovalStatus(status);
         applicationRepository.save(application);
     }
+
+    public Application getApplicationById(String id) {
+        return applicationRepository.findById(id).orElse(null);
+    }
 }
