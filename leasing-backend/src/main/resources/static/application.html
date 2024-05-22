@@ -60,6 +60,9 @@
     <script>
         document.addEventListener('DOMContentLoaded', async function() {
             const userId = localStorage.getItem('userId');
+            const urlParams = new URLSearchParams(window.location.search);
+            const selectedUnitId = urlParams.get('unitId');
+
             if (!userId) {
                 window.location.href = 'resident-login.html';
                 return;
@@ -71,8 +74,11 @@
                 document.getElementById('approval-status').textContent = `Approval Status: ${application.approvalStatus}`;
                 document.getElementById('unit-id').textContent = `Unit ID: ${application.unitId}`;
                 document.getElementById('withdraw-application').style.display = 'block';
-            } else {
+            } else if (selectedUnitId) {
                 document.getElementById('application-form').style.display = 'block';
+                document.getElementById('selected-unit-id').textContent = selectedUnitId;
+            } else {
+                window.location.href = 'housing-options.html';
             }
 
             document.getElementById('withdraw-application').addEventListener('click', async function() {
@@ -100,7 +106,6 @@
             document.getElementById('submit-application').addEventListener('click', async function() {
                 const fileInput = document.getElementById('pdf-upload');
                 const file = fileInput.files[0];
-                const unitId = localStorage.getItem('selectedUnitId'); // Assuming you have selectedUnitId stored in local storage
 
                 if (!file) {
                     alert('Please upload a PDF file.');
@@ -109,7 +114,7 @@
 
                 const formData = new FormData();
                 formData.append('file', file);
-                formData.append('unitId', unitId);
+                formData.append('unitId', selectedUnitId);
                 formData.append('userId', userId);
 
                 const submitResponse = await fetch('/api/applications', {
@@ -132,7 +137,7 @@
                 document.getElementById('user-name').textContent = `Hello, ${firstName}`;
                 document.getElementById('logout-nav-item').style.display = 'block';
             } else {
-                window.location.href = 'resident-login.html'; // Redirect to login if not logged in
+                window.location.href = 'resident-login.html';
             }
 
             document.getElementById('logout-button').addEventListener('click', function () {
@@ -143,9 +148,9 @@
                     }
                 }).then(response => {
                     if (response.status === 200) {
-                        localStorage.removeItem('isLoggedIn'); // Clear login flag
-                        localStorage.removeItem('firstName'); // Clear first name
-                        localStorage.removeItem('userId'); // Clear user ID
+                        localStorage.removeItem('isLoggedIn');
+                        localStorage.removeItem('firstName');
+                        localStorage.removeItem('userId');
                         window.location.href = 'index.html';
                     } else {
                         alert('Logout failed');

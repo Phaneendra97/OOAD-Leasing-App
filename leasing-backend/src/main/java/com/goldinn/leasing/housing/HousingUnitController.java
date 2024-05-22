@@ -1,7 +1,7 @@
-package com.goldinn.leasing.controller;
+package com.goldinn.leasing.housing;
 
-import com.goldinn.leasing.model.HousingUnit;
-import com.goldinn.leasing.service.HousingUnitService;
+import com.goldinn.leasing.housing.HousingUnit;
+import com.goldinn.leasing.housing.HousingUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

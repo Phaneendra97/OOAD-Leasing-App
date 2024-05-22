@@ -1,7 +1,7 @@
-package com.goldinn.leasing.service;
+package com.goldinn.leasing.housing;
 
-import com.goldinn.leasing.model.HousingUnit;
-import com.goldinn.leasing.repository.HousingUnitRepository;
+import com.goldinn.leasing.housing.HousingUnit;
+import com.goldinn.leasing.housing.HousingUnitRepository;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

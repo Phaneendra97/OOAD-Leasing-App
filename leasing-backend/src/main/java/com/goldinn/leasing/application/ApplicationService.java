@@ -1,7 +1,6 @@
 package com.goldinn.leasing.application;
 
 import com.goldinn.leasing.application.Application;
-import com.goldinn.leasing.application.ApplicationWithUserDetails;
 import com.goldinn.leasing.login.UserRepository;
 import com.goldinn.leasing.login.User;
 import com.goldinn.leasing.application.ApplicationRepository;
@@ -49,7 +48,8 @@ public class ApplicationService {
         applicationRepository.save(application);
     }
 
-    public Application getApplicationById(String id) {
-        return applicationRepository.findById(id).orElse(null);
+    public void deleteApplication(String id) {
+        Application application = applicationRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid application ID"));
+        applicationRepository.delete(application);
     }
 }

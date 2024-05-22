@@ -1,6 +1,6 @@
-package com.goldinn.leasing.repository;
+package com.goldinn.leasing.housing;
 
-import com.goldinn.leasing.model.HousingUnit;
+import com.goldinn.leasing.housing.HousingUnit;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

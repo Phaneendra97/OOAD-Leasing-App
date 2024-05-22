@@ -164,8 +164,7 @@
         }
 
         function startApplication(unitId) {
-            localStorage.setItem('selectedUnitId', unitId);
-            window.location.href = 'application.html';
+            window.location.href = `application.html?unitId=${unitId}`;
         }
     </script>
 </body>

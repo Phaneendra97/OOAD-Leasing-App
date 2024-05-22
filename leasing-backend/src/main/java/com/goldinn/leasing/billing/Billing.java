@@ -1,4 +1,4 @@
-package com.goldinn.leasing;
+package com.goldinn.leasing.billing;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

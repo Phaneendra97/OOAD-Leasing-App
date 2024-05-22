@@ -1,7 +1,6 @@
 package com.goldinn.leasing.application;
 
 import com.goldinn.leasing.application.Application;
-import com.goldinn.leasing.application.ApplicationWithUserDetails;
 import com.goldinn.leasing.application.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,9 +30,9 @@ public class ApplicationController {
         application.setUnitId(unitId);
         application.setPdfFile(pdfFileBase64);
         application.setUserId(userId);
-        
+
         applicationService.createApplication(application);
-        
+
         return ResponseEntity.ok("Application submitted successfully.");
     }
 
@@ -64,16 +63,9 @@ public class ApplicationController {
         return ResponseEntity.ok("Status updated successfully");
     }
 
-    @GetMapping("/download/{id}")
-    public ResponseEntity<byte[]> downloadPdfFile(@PathVariable String id) {
-        Application application = applicationService.getApplicationById(id);
-        if (application != null) {
-            byte[] pdfFileBytes = Base64.getDecoder().decode(application.getPdfFile());
-            return ResponseEntity.ok()
-                    .header("Content-Disposition", "attachment; filename=\"application.pdf\"")
-                    .body(pdfFileBytes);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteApplication(@PathVariable String id) {
+        applicationService.deleteApplication(id);
+        return ResponseEntity.ok("Application declined successfully");
     }
 }
