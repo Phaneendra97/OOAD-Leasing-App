@@ -79,6 +79,11 @@ public class ApplicationService {
     private void createBillingAndLeasing(Application application) {
         Instant now = Instant.now();
 
+        // Check if billing already exists for this application
+        if (billingRepository.existsByUnitId(application.getUnitId())) {
+            return;
+        }
+
         // Create billing entry
         Billing billing = new Billing();
         billing.setUnitId(application.getUnitId());
