@@ -1,0 +1,42 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "java (buildArtifact)",
+			"mainClass": "com.goldinn.leasing.LeasingApplication",
+			"targetPath": "${workspaceFolder}/${workspaceFolderBasename}.jar",
+			"elements": [
+				"${compileOutput}",
+				"${dependencies}"
+			],
+			"problemMatcher": [],
+			"label": "java (buildArtifact): OOAD-Leasing-App"
+		},
+		{
+			"type": "java (buildArtifact)",
+			"mainClass": "com.goldinn.leasing.LeasingApplication",
+			"targetPath": "${workspaceFolder}/${workspaceFolderBasename}.jar",
+			"elements": [
+				"${compileOutput}",
+				"${dependencies}"
+			],
+			"problemMatcher": [],
+			"label": "java (buildArtifact): OOAD-Leasing-App",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"type": "java (buildArtifact)",
+			"mainClass": "com.goldinn.leasing.LeasingApplication",
+			"targetPath": "${workspaceFolder}/${workspaceFolderBasename}.jar",
+			"elements": [
+				"${compileOutput}",
+				"${dependencies}"
+			],
+			"problemMatcher": [],
+			"label": "java (buildArtifact): OOAD-Leasing-App"
+		}
+	]
+}

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Application Status - GoldInn House Leasing</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="index.html">
+            <img src="https://via.placeholder.com/40" alt="GoldInn Logo" />
+            GoldInn House Leasing
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item" id="logout-nav-item">
+                    <span id="user-name" class="navbar-text"></span>
+                    <button class="btn btn-link nav-link" id="logout-button">Logout</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h2 class="text-center">Application Status</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Unit ID</th>
+                    <th>Approval Status</th>
+                    <th>Application File</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="applications-table-body">
+              <!-- Applications will be populated here -->
+            </tbody>
+        </table>
+
+        <h2 class="text-center">Generate Bills</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Unit ID</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="residents-table-body">
+              <!-- Residents will be populated here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("/api/applications/all")
+                .then((response) => response.json())
+                .then((data) => {
+                    const tableBody = document.getElementById("applications-table-body");
+                    data.forEach((application) => {
+                        const row = document.createElement("tr");
+
+                        row.innerHTML = `
+                            <td>${application.firstName}</td>
+                            <td>${application.lastName}</td>
+                            <td>${application.unitId}</td>
+                            <td>${application.approvalStatus}</td>
+                            <td><a href="data:application/pdf;base64,${application.pdfFile}" download="application.pdf">Download PDF</a></td>
+                            <td>
+                                <button class="btn btn-success" onclick="approveApplication('${application.id}')">Approve</button>
+                                <button class="btn btn-danger" onclick="declineApplication('${application.id}')">Decline</button>
+                            </td>
+                        `;
+
+                        tableBody.appendChild(row);
+                    });
+                });
+
+            fetch("/api/residents/all")
+                .then((response) => response.json())
+                .then((data) => {
+                    const tableBody = document.getElementById("residents-table-body");
+                    data.forEach((resident) => {
+                        const row = document.createElement("tr");
+
+                        row.innerHTML = `
+                            <td>${resident.firstName}</td>
+                            <td>${resident.lastName}</td>
+                            <td>${resident.unitId}</td>
+                            <td>
+                                <button class="btn btn-primary" onclick="generateBill('${resident.unitId}')">Generate Bill</button>
+                            </td>
+                        `;
+
+                        tableBody.appendChild(row);
+                    });
+                });
+        });
+
+        function approveApplication(id) {
+            fetch(`/api/applications/update-status/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ approvalStatus: "approved" }),
+            }).then((response) => {
+                if (response.ok) {
+                    location.reload(); // Reload the page to see the updated table
+                } else {
+                    alert("Failed to approve application.");
+                }
+            });
+        }
+
+        function declineApplication(id) {
+            fetch(`/api/applications/delete/${id}`, {
+                method: "DELETE",
+            }).then((response) => {
+                if (response.ok) {
+                    location.reload(); // Reload the page to see the updated table
+                } else {
+                    alert("Failed to decline application.");
+                }
+            });
+        }
+
+        function generateBill(unitId) {
+            const gas = Math.floor(Math.random() * 21) + 30;
+            const electricity = Math.floor(Math.random() * 51) + 50;
+            const maintenance = Math.floor(Math.random() * 31) + 30;
+
+            fetch(`/api/housing-units/${unitId}`)
+                .then(response => response.json())
+                .then(housingUnit => {
+                    const rent = housingUnit.cost;
+                    fetch(`/api/billing/generate`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ unitId, gas, electricity, maintenance, rent }),
+                    }).then(response => {
+                        if (response.ok) {
+                            alert("Bill generated successfully.");
+                        } else {
+                            alert("Failed to generate bill.");
+                        }
+                    });
+                });
+        }
+
+        document
+            .getElementById("logout-button")
+            .addEventListener("click", function () {
+                fetch("/api/auth/logout", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }).then((response) => {
+                    if (response.status === 200) {
+                        localStorage.removeItem("isLoggedIn");
+                        localStorage.removeItem("firstName");
+                        localStorage.removeItem("userId");
+                        window.location.href = "index.html";
+                    } else {
+                        alert("Logout failed");
+                    }
+                });
+            });
+    </script>
+</body>
+</html>

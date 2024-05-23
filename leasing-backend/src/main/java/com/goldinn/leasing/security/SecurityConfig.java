@@ -3,30 +3,55 @@ package com.goldinn.leasing.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/", "/index.html", "/create-account.html", "/resident-login.html", "/css/**", "/js/**", "/images/**", "/api/register-user").permitAll()  // Allow access to these paths without authentication
-                .anyRequest().authenticated()  // All other paths require authentication
+            .authorizeRequests(authorize -> authorize
+                .requestMatchers(
+                    "/", 
+                    "/index.html", 
+                    "/create-account.html", 
+                    "/resident-login.html", 
+                    "/admin-login.html", 
+                    "/admin-create-account.html", 
+                    "/leasingApp.pdf",
+                    "/admin-dashboard.html",
+                    "/api/applications/**",
+                    "/housing-options.html", 
+                    "/application.html",  
+                    "/resident-profile.html",
+                    "/api/residents/**",
+                    "/api/billing/**",
+                    "/api/auth/**",
+                    "/api/housing-units/**",
+                    "/css/**", 
+                    "/js/**", 
+                    "/images/**"
+                ).permitAll()
+                .anyRequest().authenticated()
             )
             .formLogin(formLogin -> formLogin
-                .loginPage("/resident-login.html")  // Specify your login page
+                .loginPage("/resident-login.html")
+                .defaultSuccessUrl("/index.html", true)
+                .permitAll()
+            )
+            .formLogin(formLogin -> formLogin
+                .loginPage("/admin-login.html")
+                .defaultSuccessUrl("/admin-dashboard.html", true)
                 .permitAll()
             )
             .logout(logout -> logout
+                .logoutUrl("/api/auth/logout")
                 .permitAll()
             )
-            .csrf(csrf -> csrf.disable()); // Disable CSRF for simplicity (not recommended for production)
+            .csrf(csrf -> csrf.disable());
 
         return http.build();
     }

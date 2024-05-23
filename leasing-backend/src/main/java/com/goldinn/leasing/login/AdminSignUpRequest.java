@@ -1,37 +1,15 @@
 package com.goldinn.leasing.login;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-@Document(collection = "user")
-public class User {
-    @Id
-    private String id;
+public class AdminSignUpRequest {
     private String firstName;
     private String lastName;
     private String phone;
     private String email;
     private String password;
-    private Boolean isAdmin;
-    private Boolean isResident; // Nullable Boolean field
+    private String accessCode;
+    private Boolean isResident;
 
     // Getters and setters
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -56,6 +34,14 @@ public class User {
         this.phone = phone;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -64,12 +50,12 @@ public class User {
         this.password = password;
     }
 
-    public Boolean isAdmin() {
-        return isAdmin;
+    public String getAccessCode() {
+        return accessCode;
     }
 
-    public void setAdmin(Boolean isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setAccessCode(String accessCode) {
+        this.accessCode = accessCode;
     }
 
     public Boolean getIsResident() {
