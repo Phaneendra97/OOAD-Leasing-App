@@ -6,17 +6,17 @@ import java.time.LocalDate;
 
 @Document(collection = "billings")
 public class Billing {
+
     @Id
     private String id;
     private String unitId;
-    private LocalDate dueDate;
-    private double gas;
-    private double electricity;
-    private double maintenance;
-    private double rent; // Add rent field
+    private int gas;
+    private int electricity;
+    private int maintenance;
+    private int rent;
+    private LocalDate dueDate; // Add this field
 
-    // Getters and Setters
-
+    // Getters and setters
     public String getId() {
         return id;
     }
@@ -33,43 +33,43 @@ public class Billing {
         this.unitId = unitId;
     }
 
-    public LocalDate getDueDate() {
-        return dueDate;
-    }
-
-    public void setDueDate(LocalDate dueDate) {
-        this.dueDate = dueDate;
-    }
-
-    public double getGas() {
+    public int getGas() {
         return gas;
     }
 
-    public void setGas(double gas) {
+    public void setGas(int gas) {
         this.gas = gas;
     }
 
-    public double getElectricity() {
+    public int getElectricity() {
         return electricity;
     }
 
-    public void setElectricity(double electricity) {
+    public void setElectricity(int electricity) {
         this.electricity = electricity;
     }
 
-    public double getMaintenance() {
+    public int getMaintenance() {
         return maintenance;
     }
 
-    public void setMaintenance(double maintenance) {
+    public void setMaintenance(int maintenance) {
         this.maintenance = maintenance;
     }
 
-    public double getRent() {
+    public int getRent() {
         return rent;
     }
 
-    public void setRent(double rent) {
+    public void setRent(int rent) {
         this.rent = rent;
+    }
+
+    public LocalDate getDueDate() { // Add this getter
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) { // Add this setter
+        this.dueDate = dueDate;
     }
 }

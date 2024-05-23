@@ -1,19 +1,16 @@
 package com.goldinn.leasing.application;
 
-import com.goldinn.leasing.application.Application;
 import com.goldinn.leasing.billing.Billing;
 import com.goldinn.leasing.billing.BillingRepository;
 import com.goldinn.leasing.leasing.Leasing;
 import com.goldinn.leasing.leasing.LeasingRepository;
 import com.goldinn.leasing.housing.HousingUnit;
 import com.goldinn.leasing.housing.HousingUnitRepository;
-import com.goldinn.leasing.login.UserRepository;
 import com.goldinn.leasing.login.User;
-import com.goldinn.leasing.application.ApplicationRepository;
+import com.goldinn.leasing.login.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -80,19 +77,27 @@ public class ApplicationService {
         Instant now = Instant.now();
 
         // Check if billing already exists for this application
-        if (billingRepository.existsByUnitId(application.getUnitId())) {
-            return;
+        Optional<Billing> existingBillingOptional = billingRepository.findByUnitId(application.getUnitId());
+        Billing billing;
+        if (existingBillingOptional.isPresent()) {
+            billing = existingBillingOptional.get();
+            billing.setDueDate(LocalDate.now().plus(30, ChronoUnit.DAYS));
+            billing.setGas(0);
+            billing.setElectricity(0);
+            billing.setMaintenance(0);
+            billing.setRent(0); // Set the rent value as needed
+            billingRepository.save(billing);
+        } else {
+            // Create billing entry
+            billing = new Billing();
+            billing.setUnitId(application.getUnitId());
+            billing.setDueDate(LocalDate.now().plus(30, ChronoUnit.DAYS));
+            billing.setGas(0);
+            billing.setElectricity(0);
+            billing.setMaintenance(0);
+            billing.setRent(0); // Set the rent value as needed
+            billing = billingRepository.save(billing);
         }
-
-        // Create billing entry
-        Billing billing = new Billing();
-        billing.setUnitId(application.getUnitId());
-        billing.setDueDate(LocalDate.now().plus(30, ChronoUnit.DAYS));
-        billing.setGas(0);
-        billing.setElectricity(0);
-        billing.setMaintenance(0);
-        billing.setRent(0); // Set the rent value as needed
-        billing = billingRepository.save(billing);
 
         // Create leasing entry
         Leasing leasing = new Leasing();

@@ -1,6 +1,5 @@
 package com.goldinn.leasing.billing;
 
-import com.goldinn.leasing.billing.BillRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,18 +12,8 @@ public class BillingController {
     private BillingService billingService;
 
     @PostMapping("/generate")
-    public ResponseEntity<?> generateBill(@RequestBody BillRequest billRequest) {
-        try {
-            billingService.generateBill(
-                billRequest.getUnitId(), 
-                billRequest.getGas(), 
-                billRequest.getElectricity(), 
-                billRequest.getMaintenance(), 
-                billRequest.getRent()
-            );
-            return ResponseEntity.ok("Bill generated successfully.");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public ResponseEntity<String> generateBill(@RequestBody BillRequest billRequest) {
+        billingService.generateAndSaveBill(billRequest.getUnitId(), billRequest.getRent());
+        return ResponseEntity.ok("Bill generated successfully.");
     }
 }
