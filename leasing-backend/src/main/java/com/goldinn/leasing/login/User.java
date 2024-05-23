@@ -12,7 +12,7 @@ public class User {
     private String phone;
     private String email;
     private String password;
-    private boolean isAdmin;
+    private Boolean isAdmin;
     private Boolean isResident; // Nullable Boolean field
 
     // Getters and setters
@@ -64,11 +64,11 @@ public class User {
         this.password = password;
     }
 
-    public boolean isAdmin() {
+    public Boolean isAdmin() {
         return isAdmin;
     }
 
-    public void setAdmin(boolean isAdmin) {
+    public void setAdmin(Boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
 
