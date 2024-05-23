@@ -22,8 +22,8 @@ public class HousingUnitService {
         return housingUnitRepository.findAll();
     }
 
-    public Optional<HousingUnit> getHousingUnitById(String id) {
-        return housingUnitRepository.findById(id);
+    public Optional<HousingUnit> getHousingUnitById(String unitId) {
+        return housingUnitRepository.findByUnitId(unitId);
     }
 
     public Optional<HousingUnit> getHousingUnitByUserId(String userId) {

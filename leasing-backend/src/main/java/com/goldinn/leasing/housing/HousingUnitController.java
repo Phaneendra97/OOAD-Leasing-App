@@ -21,9 +21,9 @@ public class HousingUnitController {
         return housingUnitService.getAllHousingUnits();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<HousingUnit> getHousingUnitById(@PathVariable String id) {
-        Optional<HousingUnit> housingUnit = housingUnitService.getHousingUnitById(id);
+    @GetMapping("/{unitId}")
+    public ResponseEntity<HousingUnit> getHousingUnitByUnitId(@PathVariable String unitId) {
+        Optional<HousingUnit> housingUnit = housingUnitService.getHousingUnitById(unitId);
         return housingUnit.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 

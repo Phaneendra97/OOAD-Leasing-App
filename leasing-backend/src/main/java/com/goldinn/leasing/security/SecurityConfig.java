@@ -28,6 +28,7 @@ public class SecurityConfig {
                     "/application.html",  
                     "/resident-profile.html",
                     "/api/residents/**",
+                    "/api/billing/**",
                     "/api/auth/**",
                     "/api/housing-units/**",
                     "/css/**", 

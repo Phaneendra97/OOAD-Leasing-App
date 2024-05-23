@@ -10,7 +10,7 @@ public class HousingUnit {
 
     @Id
     private String id;
-    private int unitId;
+    private String unitId;
     private String dimensions;
     private String userId;
     private List<String> images;
@@ -24,7 +24,7 @@ public class HousingUnit {
     // Constructors
     public HousingUnit() {}
 
-    public HousingUnit(String id, int unitId, String dimensions, String userId, List<String> images, String map, String type, String furnished, int baths, int beds, double cost) {
+    public HousingUnit(String id, String unitId, String dimensions, String userId, List<String> images, String map, String type, String furnished, int baths, int beds, double cost) {
         this.id = id;
         this.unitId = unitId;
         this.dimensions = dimensions;
@@ -47,11 +47,11 @@ public class HousingUnit {
         this.id = id;
     }
 
-    public int getUnitId() {
+    public String getUnitId() {
         return unitId;
     }
 
-    public void setUnitId(int unitId) {
+    public void setUnitId(String unitId) {
         this.unitId = unitId;
     }
 
