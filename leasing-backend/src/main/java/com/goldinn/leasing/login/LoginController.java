@@ -46,21 +46,22 @@ public class LoginController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
-        logger.info("Authenticating user: {}", loginRequest.getEmail());
-        User authenticatedUser = loginService.authenticateUser(loginRequest);
-        if (authenticatedUser != null) {
-            logger.info("User authenticated: {}", authenticatedUser.getEmail());
-            return ResponseEntity.ok(Map.of(
-                "firstName", authenticatedUser.getFirstName(),
-                "userId", authenticatedUser.getId(),
-                "isAdmin", authenticatedUser.isAdmin()
-            ));
-        } else {
-            logger.warn("Authentication failed for user: {}", loginRequest.getEmail());
-            return new ResponseEntity<>("Invalid email or password", HttpStatus.UNAUTHORIZED);
-        }
+public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
+    logger.info("Authenticating user: {}", loginRequest.getEmail());
+    User authenticatedUser = loginService.authenticateUser(loginRequest);
+    if (authenticatedUser != null) {
+        logger.info("User authenticated: {}", authenticatedUser.getEmail());
+        return ResponseEntity.ok(Map.of(
+            "firstName", authenticatedUser.getFirstName(),
+            "userId", authenticatedUser.getId(),
+            "isAdmin", authenticatedUser.isAdmin(),
+            "isResident", authenticatedUser.getIsResident()
+        ));
+    } else {
+        logger.warn("Authentication failed for user: {}", loginRequest.getEmail());
+        return new ResponseEntity<>("Invalid email or password", HttpStatus.UNAUTHORIZED);
     }
+}
 
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpSession session) {

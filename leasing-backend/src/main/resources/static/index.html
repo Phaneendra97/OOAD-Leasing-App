@@ -183,12 +183,11 @@
 
                 if (isAdmin === "true") {
                     document.getElementById("admin-dashboard-nav-item").style.display = "block";
+                } else if (isResident === "true") {
+                    document.getElementById("resident-profile-nav-item").style.display = "block";
                 } else {
                     document.getElementById("housing-options-nav-item").style.display = "block";
                     document.getElementById("application-nav-item").style.display = "block";
-                    if (isResident === "true") {
-                        document.getElementById("resident-profile-nav-item").style.display = "block";
-                    }
                 }
                 document.getElementById("resident-login-nav-item").style.display = "none";
                 document.getElementById("admin-login-nav-item").style.display = "none";

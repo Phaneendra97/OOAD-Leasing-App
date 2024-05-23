@@ -65,12 +65,13 @@
 
             if (response.status === 200) {
                 const data = await response.json();
-                const firstName = data.firstName;
-                const userId = data.userId;
+                const { firstName, userId, isAdmin, isResident } = data;
                 alert('Login successful');
                 localStorage.setItem('isLoggedIn', 'true'); // Set flag in local storage
                 localStorage.setItem('firstName', firstName); // Store the user's first name
                 localStorage.setItem('userId', userId); // Store the user's ID
+                localStorage.setItem('isAdmin', isAdmin); // Store the user's admin status
+                localStorage.setItem('isResident', isResident); // Store the user's resident status
                 window.location.href = 'index.html'; // Redirect to home page or another protected page
             } else {
                 const message = await response.text();
