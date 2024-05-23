@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resident Profile - GoldInn House Leasing</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="index.html">
+            <img src="https://via.placeholder.com/40" alt="GoldInn Logo">
+            GoldInn House Leasing
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item" id="housing-options-nav-item" style="display: none;">
+                    <a class="nav-link" href="housing-options.html">Housing Options</a>
+                </li>
+                <li class="nav-item" id="application-nav-item" style="display: none;">
+                    <a class="nav-link" href="application.html">Application</a>
+                </li>
+                <li class="nav-item" id="resident-profile-nav-item" style="display: none;">
+                    <a class="nav-link" href="resident-profile.html">Resident Profile</a>
+                </li>
+                <li class="nav-item" id="admin-dashboard-nav-item" style="display: none;">
+                    <a class="nav-link" href="admin-dashboard.html">Admin Dashboard</a>
+                </li>
+                <li class="nav-item" id="logout-nav-item" style="display: none;">
+                    <span id="user-name" class="navbar-text"></span>
+                    <button class="btn btn-link nav-link" id="logout-button">Logout</button>
+                </li>
+                <li class="nav-item" id="resident-login-nav-item">
+                    <a class="nav-link" href="resident-login.html">Resident Login</a>
+                </li>
+                <li class="nav-item" id="admin-login-nav-item">
+                    <a class="nav-link" href="admin-login.html">Admin Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h2 class="text-center">Resident Profile</h2>
+        <div id="profile-container" class="mt-4">
+            <!-- Profile details will be displayed here -->
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        const isLoggedIn = localStorage.getItem("isLoggedIn");
+        const firstName = localStorage.getItem("firstName");
+        const isAdmin = localStorage.getItem("isAdmin");
+        const isResident = localStorage.getItem("isResident");
+        const userId = localStorage.getItem("userId");
+
+        document.addEventListener("DOMContentLoaded", function () {
+            if (isLoggedIn === "true") {
+                document.getElementById("user-name").textContent = `Hello, ${firstName}`;
+                document.getElementById("logout-nav-item").style.display = "block";
+
+                if (isAdmin === "true") {
+                    document.getElementById("admin-dashboard-nav-item").style.display = "block";
+                } else if (isResident === "true") {
+                    document.getElementById("resident-profile-nav-item").style.display = "block";
+                    loadResidentProfile(userId);
+                } else {
+                    window.location.href = "housing-options.html";
+                }
+                document.getElementById("resident-login-nav-item").style.display = "none";
+                document.getElementById("admin-login-nav-item").style.display = "none";
+            } else {
+                window.location.href = "resident-login.html";
+            }
+        });
+
+        document.getElementById("logout-button").addEventListener("click", function () {
+            fetch("/api/auth/logout", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }).then((response) => {
+                if (response.status === 200) {
+                    localStorage.removeItem("isLoggedIn");
+                    localStorage.removeItem("firstName");
+                    localStorage.removeItem("userId");
+                    localStorage.removeItem("isAdmin");
+                    localStorage.removeItem("isResident");
+                    window.location.href = "index.html";
+                } else {
+                    alert("Logout failed");
+                }
+            });
+        });
+
+        function loadResidentProfile(userId) {
+            fetch(`/api/residents/${userId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const profileContainer = document.getElementById("profile-container");
+                    profileContainer.innerHTML = `
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Name: ${data.firstName} ${data.lastName}</h5>
+                                <p class="card-text">Unit ID: ${data.unitId}</p>
+                                <p class="card-text">Lease Start: ${new Date(data.leaseStart).toLocaleDateString()}</p>
+                                <p class="card-text">Lease End: ${new Date(data.leaseEnd).toLocaleDateString()}</p>
+                                <h5 class="card-title mt-4">Billing Information</h5>
+                                <p class="card-text">Due Date: ${new Date(data.billing.dueDate).toLocaleDateString()}</p>
+                                <p class="card-text">Rent: $${data.billing.rent}</p>
+                                <p class="card-text">Gas: $${data.billing.gas}</p>
+                                <p class="card-text">Electricity: $${data.billing.electricity}</p>
+                                <p class="card-text">Maintenance: $${data.billing.maintenance}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+        }
+    </script>
+</body>
+</html>

@@ -53,6 +53,9 @@
                 <li class="nav-item" id="application-nav-item" style="display: none;">
                     <a class="nav-link" href="application.html">Application</a>
                 </li>
+                <li class="nav-item" id="resident-profile-nav-item" style="display: none;">
+                    <a class="nav-link" href="resident-profile.html">Resident Profile</a>
+                </li>
                 <li class="nav-item" id="admin-dashboard-nav-item" style="display: none;">
                     <a class="nav-link" href="admin-dashboard.html">Admin Dashboard</a>
                 </li>
@@ -171,18 +174,21 @@
         const isLoggedIn = localStorage.getItem("isLoggedIn");
         const firstName = localStorage.getItem("firstName");
         const isAdmin = localStorage.getItem("isAdmin");
+        const isResident = localStorage.getItem("isResident");
 
         document.addEventListener("DOMContentLoaded", function () {
             if (isLoggedIn === "true") {
                 document.getElementById("user-name").textContent = `Hello, ${firstName}`;
                 document.getElementById("logout-nav-item").style.display = "block";
+
                 if (isAdmin === "true") {
                     document.getElementById("admin-dashboard-nav-item").style.display = "block";
-                    document.getElementById("housing-options-nav-item").style.display = "none";
-                    document.getElementById("application-nav-item").style.display = "none";
                 } else {
                     document.getElementById("housing-options-nav-item").style.display = "block";
                     document.getElementById("application-nav-item").style.display = "block";
+                    if (isResident === "true") {
+                        document.getElementById("resident-profile-nav-item").style.display = "block";
+                    }
                 }
                 document.getElementById("resident-login-nav-item").style.display = "none";
                 document.getElementById("admin-login-nav-item").style.display = "none";
@@ -215,6 +221,7 @@
                     localStorage.removeItem("firstName");
                     localStorage.removeItem("userId");
                     localStorage.removeItem("isAdmin");
+                    localStorage.removeItem("isResident");
                     window.location.href = "index.html";
                 } else {
                     alert("Logout failed");

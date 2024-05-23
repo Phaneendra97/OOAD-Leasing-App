@@ -91,7 +91,7 @@ public class ApplicationService {
         billing.setGas(0);
         billing.setElectricity(0);
         billing.setMaintenance(0);
-        billing.setRent(1000); // Set the rent value as needed
+        billing.setRent(0); // Set the rent value as needed
         billing = billingRepository.save(billing);
 
         // Create leasing entry
@@ -110,6 +110,10 @@ public class ApplicationService {
             housingUnit.setUserId(application.getUserId());
             housingUnitRepository.save(housingUnit);
         }
+
+        User user = userRepository.findById(application.getUserId()).orElseThrow(() -> new IllegalArgumentException("Invalid user ID"));
+        user.setIsResident(true);
+        userRepository.save(user);
     }
 
     public void deleteApplicationById(String id) {
