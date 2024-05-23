@@ -70,6 +70,8 @@
                     if (response.status === 200) {
                         localStorage.removeItem('isLoggedIn'); // Clear login flag
                         localStorage.removeItem('firstName'); // Clear first name
+                        localStorage.removeItem("isAdmin");
+                        localStorage.removeItem("isResident");
                         window.location.href = 'index.html';
                     } else {
                         alert('Logout failed');
