@@ -36,11 +36,15 @@ public class ResidentService {
     public List<ResidentDTO> getAllResidents() {
         return userRepository.findAllByIsResidentTrue()
             .stream()
-            .map(user -> new ResidentDTO(
-                user.getFirstName(),
-                user.getLastName(),
-                user.getId() // Assuming getId() returns the unitId
-            ))
+            .map(user -> {
+                Leasing leasing = leasingRepository.findByUserId(user.getId()).orElse(null);
+                String unitId = leasing != null ? leasing.getUnitId() : "N/A";
+                return new ResidentDTO(
+                    user.getFirstName(),
+                    user.getLastName(),
+                    unitId
+                );
+            })
             .collect(Collectors.toList());
     }
 }
