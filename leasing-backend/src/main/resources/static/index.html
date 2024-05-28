@@ -10,7 +10,8 @@
             height: 100%;
         }
         .bg {
-            background: url("https://source.unsplash.com/1600x900/?house,lease") no-repeat center center fixed;
+            /* Use the local .webp file as the background image */
+            background: url("images/landing.webp") no-repeat center center fixed;
             background-size: cover;
             height: 100%;
         }
@@ -31,202 +32,208 @@
             height: 200px;
             object-fit: cover;
         }
+        .text-white {
+            color: white !important;
+        }
+        .text-black {
+            color: black !important;
+        }
     </style>
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="index.html">
-            <img src="https://via.placeholder.com/40" alt="GoldInn Logo">
-            GoldInn House Leasing
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html">Home</a>
-                </li>
-                <li class="nav-item" id="housing-options-nav-item" style="display: none;">
-                    <a class="nav-link" href="housing-options.html">Housing Options</a>
-                </li>
-                <li class="nav-item" id="application-nav-item" style="display: none;">
-                    <a class="nav-link" href="application.html">Application</a>
-                </li>
-                <li class="nav-item" id="resident-profile-nav-item" style="display: none;">
-                    <a class="nav-link" href="resident-profile.html">Resident Profile</a>
-                </li>
-                <li class="nav-item" id="admin-dashboard-nav-item" style="display: none;">
-                    <a class="nav-link" href="admin-dashboard.html">Admin Dashboard</a>
-                </li>
-                <li class="nav-item" id="logout-nav-item" style="display: none;">
-                    <span id="user-name" class="navbar-text"></span>
-                    <button class="btn btn-link nav-link" id="logout-button">Logout</button>
-                </li>
-                <li class="nav-item" id="resident-login-nav-item">
-                    <a class="nav-link" href="resident-login.html">Resident Login</a>
-                </li>
-                <li class="nav-item" id="admin-login-nav-item">
-                    <a class="nav-link" href="admin-login.html">Admin Login</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <div class="bg d-flex align-items-center justify-content-center">
-        <div class="text-center welcome-text">
-            <h1 class="display-3">Welcome to GoldInn House Leasing</h1>
-            <p class="lead">Find your perfect home with us.</p>
-        </div>
+<body class="bg">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="index.html">
+        <img src="https://via.placeholder.com/40" alt="GoldInn Logo">
+        GoldInn House Leasing
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item" id="housing-options-nav-item" style="display: none;">
+                <a class="nav-link" href="housing-options.html">Housing Options</a>
+            </li>
+            <li class="nav-item" id="application-nav-item" style="display: none;">
+                <a class="nav-link" href="application.html">Application</a>
+            </li>
+            <li class="nav-item" id="resident-profile-nav-item" style="display: none;">
+                <a class="nav-link" href="resident-profile.html">Resident Profile</a>
+            </li>
+            <li class="nav-item" id="admin-dashboard-nav-item" style="display: none;">
+                <a class="nav-link" href="admin-dashboard.html">Admin Dashboard</a>
+            </li>
+            <li class="nav-item" id="logout-nav-item" style="display: none;">
+                <span id="user-name" class="navbar-text"></span>
+                <button class="btn btn-link nav-link" id="logout-button">Logout</button>
+            </li>
+            <li class="nav-item" id="resident-login-nav-item">
+                <a class="nav-link" href="resident-login.html">Resident Login</a>
+            </li>
+            <li class="nav-item" id="admin-login-nav-item">
+                <a class="nav-link" href="admin-login.html">Admin Login</a>
+            </li>
+        </ul>
     </div>
-    <div class="container">
-        <div class="section">
-            <h2 class="section-title text-center">Amenities</h2>
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="https://source.unsplash.com/200x200/?swimming-pool" class="card-img-top" alt="Swimming Pool">
-                        <div class="card-body">
-                            <h5 class="card-title">Swimming Pool</h5>
-                            <p class="card-text">Relax and unwind in our state-of-the-art swimming pool.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="https://source.unsplash.com/200x200/?tennis-court" class="card-img-top" alt="Tennis Court">
-                        <div class="card-body">
-                            <h5 class="card-title">Tennis Court</h5>
-                            <p class="card-text">Enjoy a game of tennis on our professional-grade court.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="https://source.unsplash.com/200x200/?gym" class="card-img-top" alt="Gym">
-                        <div class="card-body">
-                            <h5 class="card-title">Gym</h5>
-                            <p class="card-text">Stay fit and healthy with our fully equipped gym.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="https://source.unsplash.com/200x200/?home-theater" class="card-img-top" alt="Home Theater">
-                        <div class="card-body">
-                            <h5 class="card-title">Home Theater</h5>
-                            <p class="card-text">Watch your favorite movies in our luxurious home theater.</p>
-                        </div>
+</nav>
+<div class="bg d-flex align-items-center justify-content-center">
+    <div class="text-center welcome-text">
+        <h1 class="display-3">Welcome to GoldInn House Leasing</h1>
+        <p class="lead">Find your perfect home with us.</p>
+    </div>
+</div>
+<div class="container">
+    <div class="section text-white">
+        <h2 class="section-title text-center">Amenities</h2>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="images/swimming-pool.webp" class="card-img-top" alt="Swimming Pool">
+                    <div class="card-body text-black">
+                        <h5 class="card-title">Swimming Pool</h5>
+                        <p class="card-text">Relax and unwind in our state-of-the-art swimming pool.</p>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="section bg-light">
-            <h2 class="section-title text-center">Housing Options</h2>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="https://source.unsplash.com/200x200/?apartment" class="card-img-top" alt="2 Bed 2 Bath">
-                        <div class="card-body">
-                            <h5 class="card-title">2 Bed 2 Bath</h5>
-                            <p class="card-text">Spacious and modern apartments perfect for small families.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="https://source.unsplash.com/200x200/?house" class="card-img-top" alt="3 Bed 3 Bath">
-                        <div class="card-body">
-                            <h5 class="card-title">3 Bed 3 Bath</h5>
-                            <p class="card-text">Comfortable and elegant homes for larger families.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="https://source.unsplash.com/200x200/?villa" class="card-img-top" alt="Villas">
-                        <div class="card-body">
-                            <h5 class="card-title">Villas</h5>
-                            <p class="card-text">Luxurious villas offering the ultimate in comfort and style.</p>
-                        </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./images/tennis-court.webp" class="card-img-top" alt="Tennis Court">
+                    <div class="card-body text-black">
+                        <h5 class="card-title">Tennis Court</h5>
+                        <p class="card-text">Enjoy a game of tennis on our professional-grade court.</p>
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-center">
-                <button class="btn btn-primary mt-3" id="explore-button">Explore Housing Options</button>
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./images/gym.webp" class="card-img-top" alt="Gym">
+                    <div class="card-body text-black">
+                        <h5 class="card-title">Gym</h5>
+                        <p class="card-text">Stay fit and healthy with our fully equipped gym.</p>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="section">
-            <h2 class="section-title text-center">Contact Us</h2>
-            <div class="row justify-content-center">
-                <div class="col-md-6 text-center">
-                    <p><strong>Office Address:</strong> 123 GoldInn Street, Leasing City, 45678</p>
-                    <p><strong>Phone:</strong> (123) 456-7890</p>
-                    <p><strong>Email:</strong> contact@goldinnleasing.com</p>
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="./images/home-theater.webp" class="card-img-top" alt="Home Theater">
+                    <div class="card-body text-black">
+                        <h5 class="card-title">Home Theater</h5>
+                        <p class="card-text">Watch your favorite movies in our luxurious home theater.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="section bg-light">
+        <h2 class="section-title text-center">Housing Options</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="./images/2b2b.webp" class="card-img-top" alt="2 Bed 2 Bath">
+                    <div class="card-body">
+                        <h5 class="card-title">2 Bed 2 Bath</h5>
+                        <p class="card-text">Spacious and modern apartments perfect for small families.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="./images/3b3b.webp" class="card-img-top" alt="3 Bed 3 Bath">
+                    <div class="card-body">
+                        <h5 class="card-title">3 Bed 3 Bath</h5>
+                        <p class="card-text">Comfortable and elegant homes for larger families.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="./images/villa.webp" class="card-img-top" alt="Villas">
+                    <div class="card-body">
+                        <h5 class="card-title">Villas</h5>
+                        <p class="card-text">Luxurious villas offering the ultimate in comfort and style.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-primary mt-3" id="explore-button">Explore Housing Options</button>
+        </div>
+    </div>
+    <div class="section text-white">
+        <h2 class="section-title text-center">Contact Us</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <p><strong>Office Address:</strong> 123 GoldInn Street, Leasing City, 45678</p>
+                <p><strong>Phone:</strong> (123) 456-7890</p>
+                <p><strong>Email:</strong> contact@goldinnleasing.com</p>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        const isLoggedIn = localStorage.getItem("isLoggedIn");
-        const firstName = localStorage.getItem("firstName");
-        const isAdmin = localStorage.getItem("isAdmin");
-        const isResident = localStorage.getItem("isResident");
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const firstName = localStorage.getItem("firstName");
+    const isAdmin = localStorage.getItem("isAdmin");
+    const isResident = localStorage.getItem("isResident");
 
-        document.addEventListener("DOMContentLoaded", function () {
-            if (isLoggedIn === "true") {
-                document.getElementById("user-name").textContent = `Hello, ${firstName}`;
-                document.getElementById("logout-nav-item").style.display = "block";
+    document.addEventListener("DOMContentLoaded", function () {
+        if (isLoggedIn === "true") {
+            document.getElementById("user-name").textContent = `Hello, ${firstName}`;
+            document.getElementById("logout-nav-item").style.display = "block";
 
-                if (isAdmin === "true") {
-                    document.getElementById("admin-dashboard-nav-item").style.display = "block";
-                } else if (isResident === "true") {
-                    document.getElementById("resident-profile-nav-item").style.display = "block";
-                } else {
-                    document.getElementById("housing-options-nav-item").style.display = "block";
-                    document.getElementById("application-nav-item").style.display = "block";
-                }
-                document.getElementById("resident-login-nav-item").style.display = "none";
-                document.getElementById("admin-login-nav-item").style.display = "none";
+            if (isAdmin === "true") {
+                document.getElementById("admin-dashboard-nav-item").style.display = "block";
+            } else if (isResident === "true") {
+                document.getElementById("resident-profile-nav-item").style.display = "block";
             } else {
-                document.getElementById("logout-nav-item").style.display = "none";
-                document.getElementById("housing-options-nav-item").style.display = "none";
-                document.getElementById("application-nav-item").style.display = "none";
-                document.getElementById("resident-login-nav-item").style.display = "block";
-                document.getElementById("admin-login-nav-item").style.display = "block";
+                document.getElementById("housing-options-nav-item").style.display = "block";
+                document.getElementById("application-nav-item").style.display = "block";
+            }
+            document.getElementById("resident-login-nav-item").style.display = "none";
+            document.getElementById("admin-login-nav-item").style.display = "none";
+        } else {
+            document.getElementById("logout-nav-item").style.display = "none";
+            document.getElementById("housing-options-nav-item").style.display = "none";
+            document.getElementById("application-nav-item").style.display = "none";
+            document.getElementById("resident-login-nav-item").style.display = "block";
+            document.getElementById("admin-login-nav-item").style.display = "block";
+        }
+    });
+
+    document.getElementById("explore-button").addEventListener("click", function () {
+        if (isLoggedIn === "true") {
+            window.location.href = "housing-options.html";
+        } else {
+            window.location.href = "resident-login.html";
+        }
+    });
+
+    document.getElementById("logout-button").addEventListener("click", function () {
+        fetch("/api/auth/logout", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then((response) => {
+            if (response.status === 200) {
+                localStorage.removeItem("isLoggedIn");
+                localStorage.removeItem("firstName");
+                localStorage.removeItem("userId");
+                localStorage.removeItem("isAdmin");
+                localStorage.removeItem("isResident");
+                window.location.href = "index.html";
+            } else {
+                alert("Logout failed");
             }
         });
-
-        document.getElementById("explore-button").addEventListener("click", function () {
-            if (isLoggedIn === "true") {
-                window.location.href = "housing-options.html";
-            } else {
-                window.location.href = "resident-login.html";
-            }
-        });
-
-        document.getElementById("logout-button").addEventListener("click", function () {
-            fetch("/api/auth/logout", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }).then((response) => {
-                if (response.status === 200) {
-                    localStorage.removeItem("isLoggedIn");
-                    localStorage.removeItem("firstName");
-                    localStorage.removeItem("userId");
-                    localStorage.removeItem("isAdmin");
-                    localStorage.removeItem("isResident");
-                    window.location.href = "index.html";
-                } else {
-                    alert("Logout failed");
-                }
-            });
-        });
-    </script>
+    });
+</script>
 </body>
 </html>
